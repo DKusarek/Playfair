@@ -1,0 +1,50 @@
+.formColumn {
+    width: 30%;
+    display: inline-block;
+}
+
+.displayColumn {
+    width: 30%;
+    display: inline-block;
+    margin-left: 5%;
+    vertical-align: top;
+}
+
+.encryptedText {
+    width: 30%;
+    display: inline-block;
+    margin-left: 5%;
+    vertical-align: top;
+}
+
+.diagram,
+.diagram tr,
+.diagram td {
+    border: 2px #42A948 solid;
+}
+
+.diagram td {
+    width: 25px;
+    text-align: center;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+}
+
+.old-val {
+    border: crimson 5px dotted !important;
+}
+
+.new-val {
+    background-color: chartreuse;
+}
+
+.key-val {
+    background-color: palegoldenrod;
+}

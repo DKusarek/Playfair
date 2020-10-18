@@ -1,0 +1,52 @@
+<div class="formColumn">
+    <form (ngSubmit)="onSubmit()" #playfairForm="ngForm">
+        <div class="form-group">
+            <label>Wprowadź ciąg znaków (tylko litery i spacje)</label>
+            <textarea class="form-control" id="text" name="text" required [(ngModel)]="params.text" rows="10" pattern="[a-zA-Z ]*"></textarea>
+            <br/>
+            <label>Wprowadź klucz szyfrowania (tylko litery i spacje)</label>
+            <input type="text" class="form-control" name="key" id="key" required [(ngModel)]="params.key" pattern="[a-zA-Z ]*" />
+            <br/>
+            <label>
+                <input type="radio" name="option" value="Encrypt" required [(ngModel)]="params.option"> Szyfruj
+            </label>
+            <br/>
+            <label>
+                <input type="radio" name="option" value="Decrypt" required [(ngModel)]="params.option"> Odszyfruj
+            </label>
+
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!playfairForm.form.valid">Submit</button>
+    </form>
+</div>
+<div class="encryptedText">
+    <div *ngIf="submitted">
+        <label>{{params.option == 'Encrypt'? 'Zaszyfrowany': 'Odszyfrowany'}} ciąg znaków</label>
+        <textarea class="form-control" id="result" name="result" [(ngModel)]="params.result" readonly rows="10"></textarea>
+    </div>
+</div>
+<div class="displayColumn">
+    <h3>Kwadrat klucza szyfrowania</h3>
+    <table class="diagram">
+        <tr *ngFor="let row of [0,1,2,3,4]">
+            <td *ngFor="let column of [0,1,2,3,4]" [ngClass]="{'key-val': checkIfHighligth(row, column)}">
+                {{letters[row][column]=="I"?"I/J":letters[row][column]}}
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <h3 *ngIf="params.option == 'Encrypt' && submitted">Szyfrowanie</h3>
+    <h3 *ngIf="params.option == 'Decrypt' && submitted">Odszyfrowanie</h3>
+    <div *ngFor="let step of steps; let i = index">
+        <br/>
+        <h5>Krok {{step.id + 1}}:</h5>
+        Zamiana {{letters[step.firstOldPos[0]][step.firstOldPos[1]]}}{{letters[step.secondOldPos[0]][step.secondOldPos[1]]}} na {{letters[step.firstNewPos[0]][step.firstNewPos[1]]}}{{letters[step.secondNewPos[0]][step.secondNewPos[1]]}}
+        <table class="diagram">
+            <tr *ngFor="let row of [0,1,2,3,4]">
+                <td *ngFor="let column of [0,1,2,3,4]" [ngClass]="{'old-val': checkIfHighligthOld(i, row, column), 'new-val': checkIfHighligthNew(i, row, column) }">
+                    {{letters[row][column]=="I"?"I/J":letters[row][column]}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
